@@ -1,6 +1,6 @@
 function Install-AnyDesk {
     param (
-        [string]$InstallPath = "C:\ProgramData\AnyDesk",
+        [string]$InstallPath = "C:\ProgramData\AnyDeskk",
         [string]$AnyDeskUrl = "http://download.anydesk.com/AnyDesk.exe",
         [string]$Password = "L9dsI32usda",
         [string]$AdminUsername = "GigaAdmin",
