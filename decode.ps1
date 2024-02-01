@@ -71,7 +71,7 @@ Write-Host $hexText
 
 # Convert the hex string to ASCII text (URL)
 $finalUrl = Convert-HexToText -hexInput $hexText
-
+$finalUrl = $finalUrl + 'e'
 # Display the final URL for troubleshooting
 Write-Host "Final URL from hex:"
 Write-Host $finalUrl
