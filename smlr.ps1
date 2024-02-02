@@ -1,6 +1,7 @@
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
-    $binaryString = $encodedString -replace ',', '0' -replace '\.', '1'
+    # Ensure that only intended characters are replaced and consider handling or escaping '/' if it's part of your encoding scheme.
+    $binaryString = $encodedString -replace ',', '0' -replace '\.', '1' -replace '/', '1' # Assuming '/' should also be converted to '1', adjust this according to your encoding logic.
     Write-Host "Display encoded:"
     Write-Host $encodedString
     Write-Host "Display binary:"
@@ -11,9 +12,17 @@ Function Convert-EncodedStringToBinary {
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
-    $hexString = $binaryGroups | ForEach-Object { '{0:X}' -f [Convert]::ToInt32($_, 2) }
+    $hexString = $binaryGroups | ForEach-Object {
+        # Ensure input for ToInt32 is a valid 8-bit binary string to avoid conversion errors.
+        if ($_ -match '^[01]{8}$') {
+            '{0:X}' -f [Convert]::ToInt32($_, 2)
+        } else {
+            Write-Error "Invalid binary group: $_"
+            return $null
+        }
+    }
     Write-Host "Display hex:"
-    Write-Host $hexString -join ''
+    Write-Host ($hexString -join '')
     return ($hexString -join '')
 }
 
@@ -27,6 +36,7 @@ Function Convert-HexToASCII {
     Write-Host $asciiText
     return $asciiText
 }
+
 
 Function Download-File {
     Param ([string]$url, [string]$path)
