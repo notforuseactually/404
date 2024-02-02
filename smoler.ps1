@@ -30,6 +30,9 @@ $bytes = for ($i = 0; $i -lt $hexString.Length; $i += 2) {
 # Function to download file
 Function Download-File {
     Param ([string]$url, [string]$path)
+    # Display the final URL for troubleshooting
+    Write-Host "Display URL:"
+    Write-Host $url
     Invoke-WebRequest -Uri $url -OutFile $path
 }
 
