@@ -2,6 +2,8 @@
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
     $binaryString = $encodedString -replace '\.', '1' -replace '[^1]', '0'
+        Write-Host "Display encoded:"
+    Write-Host $encodedString
     Write-Host "Display binary:"
     Write-Host $binaryString
     return $binaryString
