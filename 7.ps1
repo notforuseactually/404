@@ -8,26 +8,22 @@ Function Convert-EncodedStringToBinary {
     Write-Host $binaryString
     return $binaryString
 }
-
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
     $hexString = $binaryGroups | ForEach-Object {
         # Ensure input for ToInt32 is a valid 8-bit binary string to avoid conversion errors.
         if ($_ -match '^[01]{8}$') {
-            '{0:X2}' -f [Convert]::ToInt32($_, 2)
+            return '{0:X2}' -f [Convert]::ToInt32($_, 2)
         } else {
             Write-Host "Skipping invalid or incomplete binary group: $_"
-            # Do not return anything for this iteration
-            $null  # This effectively does nothing, but it's clearer than 'return $null'
+            return $null  # Explicitly return $null for clarity
         }
     } -join ''
     Write-Host "Display hex:"
     Write-Host $hexString
     return $hexString
 }
-
-
 
 Function Convert-HexToASCII {
     Param ([string]$hexString)
