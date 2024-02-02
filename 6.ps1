@@ -18,13 +18,15 @@ Function Convert-BinaryToHex {
             '{0:X2}' -f [Convert]::ToInt32($_, 2)
         } else {
             Write-Host "Skipping invalid or incomplete binary group: $_"
-            return $null
+            # Do not return anything for this iteration
+            $null  # This effectively does nothing, but it's clearer than 'return $null'
         }
     } -join ''
     Write-Host "Display hex:"
     Write-Host $hexString
     return $hexString
 }
+
 
 
 Function Convert-HexToASCII {
