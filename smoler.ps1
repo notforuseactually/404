@@ -17,7 +17,10 @@ Function Convert-BinaryToHex {
 Function Convert-HexToASCII {
     Param ([string]$hexString)
     $bytes = for ($i = 0; $i -lt $hexString.Length; $i += 2) {
-        [Convert]::ToByte($hexString.Substring($i, 2), 16)
+        $bytes = for ($i = 0; $i -lt $hexString.Length - 1; $i += 2) {
+            [Convert]::ToByte($hexString.Substring($i, 2), 16)
+}
+
     }
     $asciiText = [System.Text.Encoding]::ASCII.GetString($bytes)
     return $asciiText
