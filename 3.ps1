@@ -68,10 +68,10 @@ Write-Host $rawText
 
 $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 $hexString = Convert-BinaryToHex -binaryString $binaryString
-$asciiText = Convert-HexToASCII -hexString $hexString # Now correctly interpreted as the final URL
+$finalUrl = Convert-HexToASCII -hexString $hexString
 
 $downloadPath = "S:\downloader\DownloadedFile.7z"
-Download-File -url $asciiText -path $downloadPath
+Download-File -url $finalUrl -path $downloadPath
 
 DownloadAndExtract7Zip
 
