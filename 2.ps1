@@ -1,7 +1,7 @@
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
-    # Ensure that only intended characters are replaced and consider handling or escaping '/' if it's part of your encoding scheme.
-    $binaryString = $encodedString -replace ',', '0' -replace '\.', '1' -replace '/', '1' # Assuming '/' should also be converted to '1', adjust this according to your encoding logic.
+    # Convert characters to binary based on your encoding scheme
+    $binaryString = $encodedString -replace ',', '0' -replace '\.', '1'
     Write-Host "Display encoded:"
     Write-Host $encodedString
     Write-Host "Display binary:"
@@ -11,14 +11,8 @@ Function Convert-EncodedStringToBinary {
 
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
-    # Pad binary string to make its length a multiple of 8
-    $padLength = 8 - ($binaryString.Length % 8)
-    if ($padLength -ne 8) {
-        $binaryString = $binaryString + ('0' * $padLength)
-    }
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
     $hexString = $binaryGroups | ForEach-Object {
-        # Ensure input for ToInt32 is a valid 8-bit binary string to avoid conversion errors.
         if ($_ -match '^[01]{8}$') {
             '{0:X2}' -f [Convert]::ToInt32($_, 2)
         } else {
@@ -27,8 +21,9 @@ Function Convert-BinaryToHex {
         }
     }
     Write-Host "Display hex:"
-    Write-Host ($hexString -join '')
-    return ($hexString -join '')
+    $hex = $hexString -join ''
+    Write-Host $hex
+    return $hex
 }
 
 Function Convert-HexToASCII {
@@ -37,7 +32,7 @@ Function Convert-HexToASCII {
         [Convert]::ToByte($hexString.Substring($i, 2), 16)
     }
     $asciiText = [System.Text.Encoding]::ASCII.GetString($bytes)
-    Write-Host "Display ASCII (Hex to Text):"
+    Write-Host "Display ascii:"
     Write-Host $asciiText
     return $asciiText
 }
