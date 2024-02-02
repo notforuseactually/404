@@ -16,9 +16,13 @@ Function Convert-BinaryToHex {
 # Function to convert hex to ASCII text
 Function Convert-HexToASCII {
     Param ([string]$hexString)
-    $asciiText = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromHexString($hexString))
+    $bytes = for ($i = 0; $i -lt $hexString.Length; $i += 2) {
+        [Convert]::ToByte($hexString.Substring($i, 2), 16)
+    }
+    $asciiText = [System.Text.Encoding]::ASCII.GetString($bytes)
     return $asciiText
 }
+
 
 # Function to download file
 Function Download-File {
