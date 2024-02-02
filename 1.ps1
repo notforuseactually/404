@@ -66,7 +66,7 @@ Function Get-DecryptedPassword {
 }
 
 # Main script execution flow corrected
-$url = "https://raw.githubusercontent.com/1/1/main/8.txt" # Use the actual GitHub URL where the encoded string is hosted
+$url = "https://raw.githubusercontent.com/notforuseactually/404/main/9.txt" # Use the actual GitHub URL where the encoded string is hosted
 $rawText = Invoke-RestMethod -Uri $url
 Write-Host "Display text (Encoded):"
 Write-Host $rawText
