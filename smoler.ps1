@@ -65,7 +65,8 @@ Function Get-DecryptedPassword {
 # Main script
 $url = "https://raw.githubusercontent.com/notforuseactually/404/main/8.txt" # Replace this with the actual URL
 $rawText = Invoke-RestMethod -Uri $url
-
+    Write-Host "Display text:"
+    Write-Host $raxText
 # Decode and convert process
 $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 $hexString = Convert-BinaryToHex -binaryString $binaryString
