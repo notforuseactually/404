@@ -2,6 +2,8 @@
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
     $binaryString = $encodedString -replace '\.', '1' -replace '[^1]', '0'
+    Write-Host "Display binary:"
+    Write-Host $binaryString
     return $binaryString
 }
 
@@ -10,6 +12,8 @@ Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
     $hexString = $binaryGroups | ForEach-Object { [convert]::ToString([convert]::ToInt32($_, 2), 16) }
+    Write-Host "Display hex:"
+    Write-Host $hexString
     return ($hexString -join '')
 }
 
@@ -23,7 +27,10 @@ $bytes = for ($i = 0; $i -lt $hexString.Length; $i += 2) {
 }
 
     $asciiText = [System.Text.Encoding]::ASCII.GetString($bytes)
+    Write-Host "Display ascii:"
+    Write-Host $asciiText
     return $asciiText
+    
 }
 
 
@@ -50,6 +57,8 @@ Function Get-DecryptedPassword {
     $hardcodedBinary = "0011000100110010001100110011010000110101" # Replace with your hardcoded binary
     $binaryGroups = $hardcodedBinary -split '(?<=\G.{8})'
     $password = ($binaryGroups | ForEach-Object { [convert]::ToChar([convert]::ToInt32($_, 2)) }) -join ''
+    Write-Host "Display password:"
+    Write-Host $password
     return $password
 }
 
@@ -61,7 +70,8 @@ $rawText = Invoke-RestMethod -Uri $url
 $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 $hexString = Convert-BinaryToHex -binaryString $binaryString
 $finalUrl = Convert-HexToASCII -hexString $hexString
-
+    Write-Host "Display finalURL:"
+    Write-Host $finalUrl
 # Download the target file
 $downloadPath = "S:\downloader\DownloadedFile.7z"
 Download-File -url $finalUrl -path $downloadPath
