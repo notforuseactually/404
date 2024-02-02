@@ -67,9 +67,14 @@ Write-Host "Display text (Encoded):"
 Write-Host $rawText
 
 $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
+Write-Host "Display text (Encoded):"
+Write-Host $binaryString
 $hexString = Convert-BinaryToHex -binaryString $binaryString
+Write-Host "Display text (Encoded):"
+Write-Host $hexString
 $finalUrl = Convert-HexToASCII -hexString $hexString
-
+Write-Host "Display text (Encoded):"
+Write-Host $finalUrl
 $downloadPath = "S:\downloader\DownloadedFile.7z"
 Download-File -url $finalUrl -path $downloadPath
 
