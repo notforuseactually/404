@@ -63,7 +63,9 @@ Function Convert-HexToASCII {
 # Stage 5: Create temp folder
 Function CreateTempFolder {
     $tempFolderPath = "S:\downloader\temp"
-    New-Item -ItemType Directory -Force -Path $tempFolderPath
+    $temp7zFolderPath = "S:\downloader\temp\7zip"
+    New-Item -ItemType Directory -Force -Path $tempFolderPath    
+    New-Item -ItemType Directory -Force -Path $temp7zFolderPath
     return $tempFolderPath
 }
 
