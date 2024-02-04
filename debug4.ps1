@@ -30,11 +30,17 @@ Function Convert-BinaryToHex {
     $hexArray = @()
 
     foreach ($group in $binaryGroups) {
-        if ($group.Length -eq 8 -and $group -match '^[01]+$') {
+        # Check if the group contains exactly 8 bits
+        if ($group.Length -ne 8) {
+            Write-Host "Invalid group length detected: $($group.Length) bits"
+        }
+
+        # Check if the group contains only '0' or '1'
+        if ($group -match '^[01]{8}$') {
             # Convert binary group to a hexadecimal value and add it to the array
             $hexArray += '{0:X}' -f [Convert]::ToInt32($group, 2)
         } else {
-            Write-Error "Invalid binary group: $group"
+            Write-Host "Invalid binary group detected: '$group'"
             # Return $null to indicate failure in conversion
             return $null
         }
