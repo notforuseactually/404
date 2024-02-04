@@ -10,15 +10,14 @@ Function FetchTextFromURL {
 Function Convert-EncodedStringToBinary {
     Param ([string]$encodedString)
     $binaryString = $encodedString -replace ',', '0' -replace '\.', '1'
-    # Add padding to ensure the string's length is a multiple of 8
-    $binaryStringLength = $binaryString.Length
-    $paddingLength = 8 - ($binaryStringLength % 8)
-    if ($paddingLength -ne 8) {
-        $binaryString = $binaryString.PadRight($binaryStringLength + $paddingLength, '0')
-    }
+    # Calculate the number of bits to pad the binary string to make it a multiple of 8
+    $paddingLength = (8 - ($binaryString.Length % 8)) % 8
+    # Pad the binary string with '0's if needed
+    $binaryString = $binaryString.PadRight($binaryString.Length + $paddingLength, '0')
     Write-Host "Stage 2 - Binary String with padding if needed:" $binaryString
     return $binaryString
 }
+
 
 # Adjusted Stage 3: Decode binary into hex
 Function Convert-BinaryToHex {
