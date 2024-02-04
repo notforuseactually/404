@@ -24,18 +24,11 @@ Function Convert-BinaryToHex {
     Param ([string]$binaryString)
     # Split the binary string into groups of 8 bits
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
-
     # Initialize an array to hold the hexadecimal values
     $hexArray = @()
-
     foreach ($group in $binaryGroups) {
-        # Check if the group contains exactly 8 bits
-        if ($group.Length -ne 8) {
-            Write-Host "Invalid group length detected: $($group.Length) bits"
-        }
-
-        # Check if the group contains only '0' or '1'
-        if ($group -match '^[01]{8}$') {
+        Write-Host "Processing binary group: $group"
+        if ($group.Length -eq 8 -and $group -match '^[01]{8}$') {
             # Convert binary group to a hexadecimal value and add it to the array
             $hexArray += '{0:X}' -f [Convert]::ToInt32($group, 2)
         } else {
@@ -44,6 +37,11 @@ Function Convert-BinaryToHex {
             return $null
         }
     }
+    # Join the hexadecimal values into a single string
+    $hexString = $hexArray -join ''
+    Write-Host "Stage 3 - Hex String:" $hexString
+    return $hexString
+}
 
     # Join the hexadecimal values into a single string
     $hexString = $hexArray -join ''
