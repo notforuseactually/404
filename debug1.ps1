@@ -71,11 +71,21 @@ Function CreateTempFolder {
 
 # Stage 6: Download file from final URL
 Function Download-File {
-    Param ([string]$url, [string]$path)
-    Write-Host "Display URL:"
-    Write-Host $url
-    Invoke-WebRequest -Uri $url -OutFile $path
+    Param (
+        [string]$url,
+        [string]$path
+    )
+    try {
+        Write-Host "Downloading file from URL: $url"
+        Write-Host "Destination path: $path"
+        Invoke-WebRequest -Uri $url -OutFile $path -ErrorAction Stop
+        Write-Host "File downloaded successfully."
+    } catch {
+        Write-Error "An error occurred while downloading the file from URL: $url"
+        Write-Error "Error details: $_"
+    }
 }
+
 # Stage 7 & 8: Download and extract portable zipped 7z executable
 Function DownloadAndExtract7Zip {
     $sevenZipUrl = "https://www.7-zip.org/a/7za920.zip"
