@@ -86,7 +86,13 @@ Function DownloadAndExtract7Zip {
 }
 
 # Stage 9: Decode password
-# Re-using Get-DecryptedPassword function provided
+Function Get-DecryptedPassword {
+    $hardcodedBinary = "0011000100110010001100110011010000110101"
+    $password = ($hardcodedBinary -split '(?<=\G.{8})' | ForEach-Object { [char][Convert]::ToInt32($_, 2) }) -join ''
+    Write-Host "Display password:"
+    Write-Host $password
+    return $password
+}
 
 # Stage 10: Use 7z to unzip the file
 Function UnzipFileWith7Zip {
