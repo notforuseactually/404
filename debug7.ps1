@@ -2,8 +2,10 @@
 Function FetchTextFromURL {
     Param ([string]$url)
     $rawText = Invoke-RestMethod -Uri $url
-    Write-Host "Stage 1 - Raw Text:" $rawText
-    return $rawText
+    # Trim leading and trailing whitespace and newline characters
+    $trimmedText = $rawText.Trim()
+    Write-Host "Stage 1 - Raw Text:" $trimmedText
+    return $trimmedText
 }
 
 # Adjusted Stage 2: Decode the text into binary
