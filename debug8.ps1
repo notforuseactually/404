@@ -29,22 +29,14 @@ Function Convert-BinaryToHex {
     # Initialize an array to hold the hexadecimal values
     $hexArray = @()
     foreach ($group in $binaryGroups) {
-        Write-Host "Processing binary group: $group"
         if ($group.Length -eq 8 -and $group -match '^[01]{8}$') {
             # Convert binary group to a hexadecimal value and add it to the array
             $hexArray += '{0:X}' -f [Convert]::ToInt32($group, 2)
         } else {
-            Write-Host "Invalid binary group detected: '$group'"
-            # Return $null to indicate failure in conversion
-            return $null
+            Write-Host "Skipping invalid binary group: '$group'"
+            # Skip the invalid group and continue processing
         }
     }
-    # Join the hexadecimal values into a single string
-    $hexString = $hexArray -join ''
-    Write-Host "Stage 3 - Hex String:" $hexString
-    return $hexString
-}
-
     # Join the hexadecimal values into a single string
     $hexString = $hexArray -join ''
     Write-Host "Stage 3 - Hex String:" $hexString
