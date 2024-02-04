@@ -23,17 +23,25 @@ Function Convert-EncodedStringToBinary {
 # Adjusted Stage 3: Decode binary into hex
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
+    # Split the binary string into groups of 8 bits
     $binaryGroups = $binaryString -split '(?<=\G.{8})'
-    $hexString = @()
+
+    # Initialize an array to hold the hexadecimal values
+    $hexArray = @()
+
     foreach ($group in $binaryGroups) {
-        if ($group -match '^[01]{8}$') {
-            $hexString += '{0:X}' -f [Convert]::ToInt32($group, 2)
+        if ($group.Length -eq 8 -and $group -match '^[01]+$') {
+            # Convert binary group to a hexadecimal value and add it to the array
+            $hexArray += '{0:X}' -f [Convert]::ToInt32($group, 2)
         } else {
             Write-Error "Invalid binary group: $group"
+            # Return $null to indicate failure in conversion
             return $null
         }
     }
-    $hexString = $hexString -join ''
+
+    # Join the hexadecimal values into a single string
+    $hexString = $hexArray -join ''
     Write-Host "Stage 3 - Hex String:" $hexString
     return $hexString
 }
