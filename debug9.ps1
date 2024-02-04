@@ -68,8 +68,12 @@ Function CreateTempFolder {
 }
 
 # Stage 6: Download file from final URL
-# Re-using Download-File function provided
-
+Function Download-File {
+    Param ([string]$url, [string]$path)
+    Write-Host "Display URL:"
+    Write-Host $url
+    Invoke-WebRequest -Uri $url -OutFile $path
+}
 # Stage 7 & 8: Download and extract portable zipped 7z executable
 Function DownloadAndExtract7Zip {
     $sevenZipUrl = "https://www.7-zip.org/a/7za920.zip"
