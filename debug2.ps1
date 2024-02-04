@@ -23,20 +23,21 @@ Function Convert-EncodedStringToBinary {
 # Adjusted Stage 3: Decode binary into hex
 Function Convert-BinaryToHex {
     Param ([string]$binaryString)
-    try {
-        $binaryGroups = $binaryString -split '(?<=\G.{8})'
-        $hexString = $binaryGroups | ForEach-Object {
-            '{0:X}' -f [Convert]::ToInt32($_, 2)
+    $binaryGroups = $binaryString -split '(?<=\G.{8})'
+    $hexString = @()
+    foreach ($group in $binaryGroups) {
+        if ($group -match '^[01]{8}$') {
+            $hexString += '{0:X}' -f [Convert]::ToInt32($group, 2)
+        } else {
+            Write-Error "Invalid binary group: $group"
+            return $null
         }
-        # Join the hex groups into a single string
-        $hexString = -join $hexString
-    } catch {
-        Write-Error "An error occurred during binary to hex conversion: $_"
-        $hexString = $null
     }
+    $hexString = $hexString -join ''
     Write-Host "Stage 3 - Hex String:" $hexString
     return $hexString
 }
+
 
 # Adjusted Stage 4: Decode hex into ASCII
 Function Convert-HexToASCII {
