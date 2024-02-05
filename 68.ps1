@@ -137,7 +137,7 @@ Function UnzipFileWith7Zip {
 # Stage 11: Setup for autostart not implemented for brevity
 
 # Stage 12: Start the file
-Fuction Launch {
+Function Launch {
 	Param ([string]$extractedFilePath)
 	 if (Test-Path -Path $extractedFilePath) {
 	 	Invoke-Item $extractedFilePath
