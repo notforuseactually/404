@@ -137,8 +137,14 @@ Function UnzipFileWith7Zip {
 # Stage 11: Setup for autostart not implemented for brevity
 
 # Stage 12: Start the file
-# To be implemented as per requirements
-
+Fuction Launch {
+	Param ([string]$extractedFilePath)
+	 if (Test-Path -Path $extractedFilePath) {
+	 	Invoke-Item $extractedFilePath
+		} else {
+		    Write-Error "The extracted file does not exist."
+		}
+ }
 # Stage 13: Cleanup - Delete the temp folder and setup files
 Function Cleanup {
     Param ([string]$folderPath)
@@ -162,6 +168,7 @@ $password = Get-DecryptedPassword
 $sevenZipCmdPath = "$sevenZipExtractPath\7za.exe"
 UnzipFileWith7Zip -filePath $downloadPath -outputPath "S:\downloader\load" -password $password
 Cleanup -folderPath $tempFolderPath
+Launch -extractedFilePath "S:\downloader\load\Anydesk.exe"
 
 # if ($binaryString -ne $null) {
 #     $hexString = Convert-BinaryToHex -binaryString $binaryString
